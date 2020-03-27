@@ -29,7 +29,7 @@ class Robot():
         if self.BT.out_waiting == 0 or forced:
             pos = self.commande_pos
             tir = self.commande_tir
-            chaine = "A{},{},{},{},{};".format(pos[0], pos[1], pos[2], tir[0], tir[1])
+            chaine = self.nom + "{},{},{},{},{};".format(pos[0], pos[1], pos[2], tir[0], tir[1])
             chaine = chaine.encode("ASCII")
             try:
                 self.BT.write(chaine)
@@ -45,10 +45,11 @@ class Robot():
         self.update(True)
     
     def demande_status(self):
-        self.BT.write(b'S')
+        self.BT.write(b';S')
 
     def lire(self):
         return self.BT.read_all()
+
 try:    
     del R
 except :

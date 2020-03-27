@@ -16,9 +16,9 @@ AX12 myax12c (PC_4, PC_5, 4);
 
 int i = 0;
 char last_read;
-int indice_a_modifie = 0;
+int indice_a_modifie = 1;
 char message[50];
-char message_vide = 0;
+char message_vide = '0';
 float front, lat, rot, T_front, T_lat = 0;
 
 /*typedef struct {
@@ -67,12 +67,12 @@ void reception_com(){
     if (coach.readable()) {
         last_read = coach.getc();
         if (last_read == 'A') {
-            indice_a_modifie = 0;
+            indice_a_modifie = 1;
             last_read = coach.getc();
             while ((last_read != ';')){
                 message[indice_a_modifie] = last_read;
-                coach.printf("|%i|%s|", indice_a_modifie, message);
                 indice_a_modifie ++;
+                coach.printf("|%i|%s|", indice_a_modifie, message);
                 last_read = coach.getc();}
             message[indice_a_modifie] = last_read;
             sscanf(message,"%f,%f,%f,%f,%f;", &front, &lat, &rot, &front, &lat );
@@ -81,7 +81,8 @@ void reception_com(){
         if (last_read == 'S') {
             send_stat();
             }
-    }}
+    }
+}
 
 int main(){
     setup();
