@@ -9,6 +9,16 @@ import time
 
 class Robot():
     def __init__(self, nom, com):
+        """
+        Initialise une nouvelle instance de robot
+
+        Parameters
+        ----------
+        nom : str
+            Nom du robot, pas forcement utile
+        com : str
+            Port de comunication du robot
+        """
         self.nom = nom
         self.BT = serial.Serial(com, timeout=0.1)
         self.BT.writeTimeout = 0.1
@@ -44,6 +54,18 @@ class Robot():
             self.BT.write(elem.encode('ASCII'))
    
     def set_commande_vit(self, frontal, lateral, rotation):
+        """
+        Setteur des commandes. envoie aussi les commandes au robot
+
+        Parameters
+        ----------
+        frontal : int
+            DESCRIPTION.
+        lateral : int
+            DESCRIPTION.
+        rotation : int
+            DESCRIPTION.
+        """
         self.commande_vit = [frontal, lateral, rotation]
         self._update_commande()
     
@@ -53,6 +75,14 @@ class Robot():
         self._envoi(self._sequance(101, self.vit_mbed[2], self.commande_vit[2]))
 
     def stop(self):
+        """
+        Stop le robot instantanément
+
+        Returns
+        -------
+        None.
+
+        """
         self.set_commande_vit(0, 0, 0)
         self._envoi(10*"Z")
     
@@ -61,8 +91,7 @@ class Robot():
 
     def _sequance(self, id_dep, val_act, val_cible):
         """
-        
-        
+                
         ord("a") = 97 - front
         ord("c") = 99 - lat
         ord("e") = 101 - rot
@@ -101,6 +130,19 @@ class Robot():
         return self.BT.read_all().decode("ASCII")
     
     def update_status(self, timeout = 1):
+    """
+        Mets à jour la representation local des varriables du robot
+
+        Parameters
+        ----------
+        timeout : float, optional
+            temps en seconde avant la levé d'une erreur. The default is 1.
+
+        Returns
+        -------
+        None.
+
+        """
         txt = " "
         self._demande_status()
         T = time.time()
