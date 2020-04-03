@@ -5,54 +5,119 @@ Created on Fri Feb 28 11:02:24 2020
 @author: Leopold
 """
 import serial
+import time
 
 class Robot():
     def __init__(self, nom, com):
         self.nom = nom
         self.BT = serial.Serial(com, timeout=0.1)
-        self.BT.writeTimeout = 0.5
+        self.BT.writeTimeout = 0.1
+        self.BT.baudrate = 115200
         self.pos = [0, 0, 0]
-        self.commande_pos = [0, 0, 0]
+        self.commande_vit = [0, 0, 0]
         self.commande_tir = [0, 0]
+        self.vit_mbed = [0, 0, 0]
+        self.tir_mbed = [0, 0]
+        self.stop()
     
     def __del__(self):
         self.BT.close()
         del self.BT
         
     def __repr__(self):
-        return "Robot {}, en {}".format(self.nom, self.pos)
+        return "{}|{}|C:{},{}|Mbed:{},{}".format(
+            self.nom,
+            self.pos,
+            self.commande_vit,
+            self.commande_tir,
+            self.vit_mbed,
+            self.tir_mbed
+            )
     
     def __str__(self):
         return self.__repr__()
-        
-    def update(self, forced = False):
-        if self.BT.out_waiting == 0 or forced:
-            pos = self.commande_pos
-            tir = self.commande_tir
-            chaine = self.nom + "{},{},{},{},{};".format(pos[0], pos[1], pos[2], tir[0], tir[1])
-            chaine = chaine.encode("ASCII")
-            try:
-                self.BT.write(chaine)
-            except :
-                print("erreur d'envoie")
-            return(chaine)
+ 
+    def _envoi(self, L_str):
+        if not isinstance(L_str, list):
+            L_str = [L_str]
+        for elem in L_str:
+            self.BT.write(elem.encode('ASCII'))
+   
+    def set_commande_vit(self, frontal, lateral, rotation):
+        self.commande_vit = [frontal, lateral, rotation]
+        self._update_commande()
     
-    def set_commande_pos(self, frontal, lateral, rotation):
-        self.commande_pos = [frontal, lateral, rotation]
-        
+    def _update_commande(self):
+        self._envoi(self._sequance(97, self.vit_mbed[0], self.commande_vit[0]))
+        self._envoi(self._sequance(99, self.vit_mbed[1], self.commande_vit[1]))
+        self._envoi(self._sequance(101, self.vit_mbed[2], self.commande_vit[2]))
+
     def stop(self):
-        self.set_commande_pos(0, 0, 0)
-        self.update(True)
+        self.set_commande_vit(0, 0, 0)
+        self._envoi(10*"Z")
     
-    def demande_status(self):
-        self.BT.write(b';S')
+    def _demande_status(self):
+        self.BT.write(b'S')
 
-    def lire(self):
-        return self.BT.read_all()
+    def _sequance(self, id_dep, val_act, val_cible):
+        """
+        
+        
+        ord("a") = 97 - front
+        ord("c") = 99 - lat
+        ord("e") = 101 - rot
+        ord("g") = 103 - tir_front
+        ord("i") = 105 - tir_lat
+        
+        Parameters
+        ----------
+        id_dep : int
+            Id du caractere de reference
+        val_act : int
+            valeur actuel du registre
+        val_cible : int
+            valeur cible du registre
 
-try:    
-    del R
-except :
-    pass
-R = Robot("A", "COM4")
-R.set_commande_pos(1,1,1)
+        Returns
+        -------
+        str
+            Chaine de caractere permetant de changer la valeur du registre
+
+        """
+        delta = val_cible - val_act
+        L = []
+        if delta == 0:
+            return L
+        if delta > 0:
+            L += delta//10 * [id_dep - 32]
+            L += delta%10 * [id_dep]
+        else:
+            delta *= -1
+            L += delta//10 * [id_dep + 1 - 32]
+            L += delta%10 * [id_dep + 1]
+        return [chr(i) for i in L]
+
+    def _lire(self):
+        return self.BT.read_all().decode("ASCII")
+    
+    def update_status(self, timeout = 1):
+        txt = " "
+        self._demande_status()
+        T = time.time()
+        while (txt[-1] != "\n"):
+            if (time.time() - T < timeout) :
+                raise TimeoutError
+            txt += self._lire()
+        assert txt[1] == "S"
+        D = txt[2:-1].split(",")
+        E = [int(s.split(".")[0]) for s in D]
+        self.vit_mbed = E[:3]
+        self.tir_mbed = E[3:]
+        return self.vit_mbed
+
+# try:    
+#     del R
+# except :
+#     pass
+# R = Robot("A", "COM4")
+        
