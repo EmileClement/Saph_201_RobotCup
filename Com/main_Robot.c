@@ -8,7 +8,7 @@ DigitalOut testLed(LED2);
 
 Serial coach(D1, D0);
 
-const float rapport_vitesse = 0.019383809*0.026315;
+const float rapport_vitesse = 0.019383809*0.026315 * 0.1; /*attention au rapport 10*/
 const float root3 = 1.7321;
 AX12 myax12a (PC_4, PC_5, 2);
 AX12 myax12b (PC_4, PC_5, 3);
