@@ -6,9 +6,11 @@ Chaque commande est representé par un carractère:
 
 | Character    | action |
 | ---  | --- |
-| A | `front ++` |
-| B | `front --` |
-| E | `lat ++` |
-| F | `lat --` |
-| I | `rot ++` |
-| J | `rot --` |
+| a | `front + 1` |
+| b | `front - 1` |
+| A | `front + 10` |
+| B | `front - 10` |
+| c | `lat + 1` |
+| etc | etc |
+| S | `envoie du status` |
+| Z | `tout a zéro` |
