@@ -1,0 +1,47 @@
+@startuml
+
+title Protocole de comunication du robot
+
+actor User
+box "Python"
+boundary "Instance de classe" as instance
+entity "__position_kadman__" as pos_kad
+entity "__position_roues__" as pos_roue
+entity "__position_gyro__" as pos_gyro
+end box
+box "Carte Mbed"
+entity main
+end box
+
+
+
+
+== Demande de la postition ==
+
+    User -> instance ++: <<demande de la position>>
+    instance -> pos_kad ++: <<demande de la position>>
+    pos_kad -> pos_roue ++: <<demande de la position>>
+    pos_roue -> main : "R"
+    main --> pos_roue : position des roues
+    return positions des roues
+    
+    pos_kad -> pos_gyro ++: <<demande de la position>>
+    pos_gyro -> main : "G"
+    main --> pos_gyro : position du gyroscope
+    return positions du giroscope
+    
+    return position calculer par le filtre
+    
+    return position
+
+== Envoie de la comande de vitesse ==
+
+User -> instance ++: consigne
+instance -> main --: consigne
+
+== Destuction de l'instance ==
+
+User -> instance ++: <<kill>>
+instance x-> main --: "Z"
+
+@enduml

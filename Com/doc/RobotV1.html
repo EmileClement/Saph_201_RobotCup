@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>RobotV1 API documentation</title>
+<meta name="description" content="Created on Fri Feb 28 11:02:24 2020 …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>RobotV1</code></h1>
+</header>
+<section id="section-intro">
+<p>Created on Fri Feb 28 11:02:24 2020</p>
+<p>@author: Leopold</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># -*- coding: utf-8 -*-
+&#34;&#34;&#34;
+Created on Fri Feb 28 11:02:24 2020
+
+@author: Leopold
+&#34;&#34;&#34;
+import serial
+import time
+import evaluation.vecteur
+import math as m
+Vecteur = evaluation.vecteur.Vecteur
+
+class Robot():
+    &#34;&#34;&#34;
+# Representation d&#39;un robot dans Python
+
+## Communication
+
+### Referentiel utilise
+
+L&#39;asservissement de vitesse est réalise dans le referentiel du robot, donc avec l/es vecteurs:
+    
+* front, qui pointe vers l&#39;avant du robot
+* lat, qui pointe vers le coté gauche du robot
+* rot, qui pounte vers le haut
+
+La position du robot est realise dns le referentiel du robot a l&#39;instant de l&#39;initialisation. La methode `Robot.set_point_reference` permet de positioner l&#39;origine du repère de position sur la position actuelle du robot
+
+### Commande de vitesse
+
+Les commances au robot sont envoyer avec le format suivant:
+    `v_front, v_lat, v_rot, tir_front, tir_lat;`
+On utilise des unites arbitraire
+
+### Demande de status
+
+L&#39;etat des varriable interne est renvoyer avec le même formalisme que dans la commande de vitesse
+    `S v_front, v_lat, v_rot, tir_front, tir_lat;\n`
+On utilise des unites arbitraire
+
+### Demande de positon
+
+Le robot envoie sa position dans le repère fixe
+    `G x, y, theta`
+Avec x et y en metre, et theta en radian
+    &#34;&#34;&#34;
+    char_declancheur = [&#39;S&#39;, &#39;G&#39;]
+    &#34;&#34;&#34;Liste des characteres anoncant un message du robot&#34;&#34;&#34;
+    
+    def __init__(self, nom, com):
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        nom : str
+            Nom du robot, pas forcement utile
+        com : str
+            Port de comunication du robot, tres utile
+        &#34;&#34;&#34;
+        self.nom = nom
+        self.BT = serial.Serial(com, timeout=0.1)
+        self.BT.writeTimeout = 0.1
+        self.BT.baudrate = 115200
+        self.commande_vit = 0,0,0
+        self.commande_tir = 0,0
+        self.position_gyro = Vecteur()
+        self.stop()
+        self._message_en_attente
+    
+    def __del__(self):
+        self.BT.close()
+        del self.BT
+        
+    def __repr__(self):
+        return &#34;{}|{}|C:{},{}|Mbed:{},{}&#34;.format(
+            self.nom,
+            self.pos,
+            self.commande_vit,
+            self.commande_tir,
+            self.vit_mbed,
+            self.tir_mbed
+            )
+    
+    def __str__(self):
+        return self.__repr__()
+ 
+    def _envoi(self, chaine):
+        self.BT.write(chaine.encode(&#39;ASCII&#39;))
+    
+    @property
+    def commande_vit(self):
+        &#34;&#34;&#34;commande actuel de vitesse du robot&#34;&#34;&#34;
+        return self._commande_vit
+
+    @commande_vit.setter
+    def commande_vit(self, frontal, lateral, rotation):
+        &#34;&#34;&#34;
+        Setteur des commandes de vitesse. 
+        
+        Envoie aussi les commandes au robot
+        Parameters
+        ----------
+        frontal : float
+            DESCRIPTION.
+        lateral : float
+            DESCRIPTION.
+        rotation : float
+            DESCRIPTION.
+        &#34;&#34;&#34;
+        self._commande_vit = Vecteur(frontal, lateral, rotation)
+        self._update_commande()
+   
+    @property
+    def commande_tir(self):
+        &#34;&#34;&#34;Commande de tir actuel du robot&#34;&#34;&#34;
+        return self._commande_tir
+
+    @commande_tir.setter
+    def commande_tir(self, front, lat=0):
+        &#34;&#34;&#34;Setteur des commande de tir&#34;&#34;&#34;
+        self._commande_tir = [front, lat]
+
+    def _update_commande(self):
+        chaine_comande = &#34;{0},{1},{2},{3},{4};&#34;.format(self.commande_vit.x,
+                                                    self.commande_vit.y,
+                                                    self.commande_vit.theta,
+                                                    self.commande_tir[0],
+                                                    self.commande_tir[1])
+        self._envoi(chaine_comande)
+
+    def stop(self):
+        &#34;&#34;&#34;Stop le robot instantanément&#34;&#34;&#34;
+        self.set_commande_vit(0, 0, 0)
+    
+    def _demande_status(self):
+        self.BT.write(b&#39;S&#39;)
+    
+    def _demande_gyroscope(self):
+        self.BT.write(b&#39;G&#39;)
+
+    def _lire(self):
+        return self.BT.read_all().decode(&#34;ASCII&#34;)
+    
+    def _lecteur(self):
+        &#34;&#34;&#34;Traitement du cahce de la liaison BlueTooth&#34;&#34;&#34;
+        chaine_a_traiter = self._lire()
+        for char in chaine_a_traiter:
+            if char in Robot.char_declancheur:
+                self._message_en_attente = char
+            elif char ==&#34;\n&#34;:
+                self._parsing()
+                self._message_en_attente = &#34;&#34;
+            else:
+                self._message_en_attente += char
+    
+    def _parsing(self):
+        chaine = self._message_en_attente
+        declancheur = chaine[0]
+        try:
+            valeur = chaine[1:].split(&#34;,&#34;)
+            if declancheur == &#39;G&#39;:
+                self.position_gyro = Vecteur(valeur[0],
+                                             valeur[1],
+                                             valeur[2])
+        except Exception:
+            print(&#39;erreur du parsing depuis le robot {}&#39;.format(self.nom))
+    
+    def set_point_reference(self):
+        &#34;&#34;&#34;La position actuel devient la position de reference pour la position&#34;&#34;&#34;
+        self._envoi(&#34;R&#34;)
+    
+    @property
+    def position(self):
+        &#34;&#34;&#34;Position du robot
+        
+        Il y a un temps de lattence car l&#39;objet demande au robot une mise a jour de sa positon
+        &#34;&#34;&#34;
+        self._demande_gyroscope()
+        self._lecteur()
+        return self.position_gyro
+            
+
+# try:    
+#     del R
+# except :
+#     pass
+# R = Robot(&#34;A&#34;, &#34;COM4&#34;)
+        </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="RobotV1.Robot"><code class="flex name class">
+<span>class <span class="ident">Robot</span></span>
+<span>(</span><span>nom, com)</span>
+</code></dt>
+<dd>
+<div class="desc"><h1 id="representation-dun-robot-dans-python">Representation d'un robot dans Python</h1>
+<h2 id="communication">Communication</h2>
+<h3 id="referentiel-utilise">Referentiel utilise</h3>
+<p>L'asservissement de vitesse est réalise dans le referentiel du robot, donc avec l/es vecteurs:</p>
+<ul>
+<li>front, qui pointe vers l'avant du robot</li>
+<li>lat, qui pointe vers le coté gauche du robot</li>
+<li>rot, qui pounte vers le haut</li>
+</ul>
+<p>La position du robot est realise dns le referentiel du robot a l'instant de l'initialisation. La methode <code><a title="RobotV1.Robot.set_point_reference" href="#RobotV1.Robot.set_point_reference">Robot.set_point_reference()</a></code> permet de positioner l'origine du repère de position sur la position actuelle du robot</p>
+<h3 id="commande-de-vitesse">Commande de vitesse</h3>
+<p>Les commances au robot sont envoyer avec le format suivant:
+<code>v_front, v_lat, v_rot, tir_front, tir_lat;</code>
+On utilise des unites arbitraire</p>
+<h3 id="demande-de-status">Demande de status</h3>
+<p>L'etat des varriable interne est renvoyer avec le même formalisme que dans la commande de vitesse
+<code>S v_front, v_lat, v_rot, tir_front, tir_lat;</code>
+On utilise des unites arbitraire</p>
+<h3 id="demande-de-positon">Demande de positon</h3>
+<p>Le robot envoie sa position dans le repère fixe
+<code>G x, y, theta</code>
+Avec x et y en metre, et theta en radian</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>nom</code></strong> :&ensp;<code>str</code></dt>
+<dd>Nom du robot, pas forcement utile</dd>
+<dt><strong><code>com</code></strong> :&ensp;<code>str</code></dt>
+<dd>Port de comunication du robot, tres utile</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Robot():
+    &#34;&#34;&#34;
+# Representation d&#39;un robot dans Python
+
+## Communication
+
+### Referentiel utilise
+
+L&#39;asservissement de vitesse est réalise dans le referentiel du robot, donc avec l/es vecteurs:
+    
+* front, qui pointe vers l&#39;avant du robot
+* lat, qui pointe vers le coté gauche du robot
+* rot, qui pounte vers le haut
+
+La position du robot est realise dns le referentiel du robot a l&#39;instant de l&#39;initialisation. La methode `Robot.set_point_reference` permet de positioner l&#39;origine du repère de position sur la position actuelle du robot
+
+### Commande de vitesse
+
+Les commances au robot sont envoyer avec le format suivant:
+    `v_front, v_lat, v_rot, tir_front, tir_lat;`
+On utilise des unites arbitraire
+
+### Demande de status
+
+L&#39;etat des varriable interne est renvoyer avec le même formalisme que dans la commande de vitesse
+    `S v_front, v_lat, v_rot, tir_front, tir_lat;\n`
+On utilise des unites arbitraire
+
+### Demande de positon
+
+Le robot envoie sa position dans le repère fixe
+    `G x, y, theta`
+Avec x et y en metre, et theta en radian
+    &#34;&#34;&#34;
+    char_declancheur = [&#39;S&#39;, &#39;G&#39;]
+    &#34;&#34;&#34;Liste des characteres anoncant un message du robot&#34;&#34;&#34;
+    
+    def __init__(self, nom, com):
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        nom : str
+            Nom du robot, pas forcement utile
+        com : str
+            Port de comunication du robot, tres utile
+        &#34;&#34;&#34;
+        self.nom = nom
+        self.BT = serial.Serial(com, timeout=0.1)
+        self.BT.writeTimeout = 0.1
+        self.BT.baudrate = 115200
+        self.commande_vit = 0,0,0
+        self.commande_tir = 0,0
+        self.position_gyro = Vecteur()
+        self.stop()
+        self._message_en_attente
+    
+    def __del__(self):
+        self.BT.close()
+        del self.BT
+        
+    def __repr__(self):
+        return &#34;{}|{}|C:{},{}|Mbed:{},{}&#34;.format(
+            self.nom,
+            self.pos,
+            self.commande_vit,
+            self.commande_tir,
+            self.vit_mbed,
+            self.tir_mbed
+            )
+    
+    def __str__(self):
+        return self.__repr__()
+ 
+    def _envoi(self, chaine):
+        self.BT.write(chaine.encode(&#39;ASCII&#39;))
+    
+    @property
+    def commande_vit(self):
+        &#34;&#34;&#34;commande actuel de vitesse du robot&#34;&#34;&#34;
+        return self._commande_vit
+
+    @commande_vit.setter
+    def commande_vit(self, frontal, lateral, rotation):
+        &#34;&#34;&#34;
+        Setteur des commandes de vitesse. 
+        
+        Envoie aussi les commandes au robot
+        Parameters
+        ----------
+        frontal : float
+            DESCRIPTION.
+        lateral : float
+            DESCRIPTION.
+        rotation : float
+            DESCRIPTION.
+        &#34;&#34;&#34;
+        self._commande_vit = Vecteur(frontal, lateral, rotation)
+        self._update_commande()
+   
+    @property
+    def commande_tir(self):
+        &#34;&#34;&#34;Commande de tir actuel du robot&#34;&#34;&#34;
+        return self._commande_tir
+
+    @commande_tir.setter
+    def commande_tir(self, front, lat=0):
+        &#34;&#34;&#34;Setteur des commande de tir&#34;&#34;&#34;
+        self._commande_tir = [front, lat]
+
+    def _update_commande(self):
+        chaine_comande = &#34;{0},{1},{2},{3},{4};&#34;.format(self.commande_vit.x,
+                                                    self.commande_vit.y,
+                                                    self.commande_vit.theta,
+                                                    self.commande_tir[0],
+                                                    self.commande_tir[1])
+        self._envoi(chaine_comande)
+
+    def stop(self):
+        &#34;&#34;&#34;Stop le robot instantanément&#34;&#34;&#34;
+        self.set_commande_vit(0, 0, 0)
+    
+    def _demande_status(self):
+        self.BT.write(b&#39;S&#39;)
+    
+    def _demande_gyroscope(self):
+        self.BT.write(b&#39;G&#39;)
+
+    def _lire(self):
+        return self.BT.read_all().decode(&#34;ASCII&#34;)
+    
+    def _lecteur(self):
+        &#34;&#34;&#34;Traitement du cahce de la liaison BlueTooth&#34;&#34;&#34;
+        chaine_a_traiter = self._lire()
+        for char in chaine_a_traiter:
+            if char in Robot.char_declancheur:
+                self._message_en_attente = char
+            elif char ==&#34;\n&#34;:
+                self._parsing()
+                self._message_en_attente = &#34;&#34;
+            else:
+                self._message_en_attente += char
+    
+    def _parsing(self):
+        chaine = self._message_en_attente
+        declancheur = chaine[0]
+        try:
+            valeur = chaine[1:].split(&#34;,&#34;)
+            if declancheur == &#39;G&#39;:
+                self.position_gyro = Vecteur(valeur[0],
+                                             valeur[1],
+                                             valeur[2])
+        except Exception:
+            print(&#39;erreur du parsing depuis le robot {}&#39;.format(self.nom))
+    
+    def set_point_reference(self):
+        &#34;&#34;&#34;La position actuel devient la position de reference pour la position&#34;&#34;&#34;
+        self._envoi(&#34;R&#34;)
+    
+    @property
+    def position(self):
+        &#34;&#34;&#34;Position du robot
+        
+        Il y a un temps de lattence car l&#39;objet demande au robot une mise a jour de sa positon
+        &#34;&#34;&#34;
+        self._demande_gyroscope()
+        self._lecteur()
+        return self.position_gyro</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="RobotV1.Robot.char_declancheur"><code class="name">var <span class="ident">char_declancheur</span></code></dt>
+<dd>
+<div class="desc"><p>Liste des characteres anoncant un message du robot</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="RobotV1.Robot.commande_tir"><code class="name">var <span class="ident">commande_tir</span></code></dt>
+<dd>
+<div class="desc"><p>Commande de tir actuel du robot</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def commande_tir(self):
+    &#34;&#34;&#34;Commande de tir actuel du robot&#34;&#34;&#34;
+    return self._commande_tir</code></pre>
+</details>
+</dd>
+<dt id="RobotV1.Robot.commande_vit"><code class="name">var <span class="ident">commande_vit</span></code></dt>
+<dd>
+<div class="desc"><p>commande actuel de vitesse du robot</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def commande_vit(self):
+    &#34;&#34;&#34;commande actuel de vitesse du robot&#34;&#34;&#34;
+    return self._commande_vit</code></pre>
+</details>
+</dd>
+<dt id="RobotV1.Robot.position"><code class="name">var <span class="ident">position</span></code></dt>
+<dd>
+<div class="desc"><p>Position du robot</p>
+<p>Il y a un temps de lattence car l'objet demande au robot une mise a jour de sa positon</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def position(self):
+    &#34;&#34;&#34;Position du robot
+    
+    Il y a un temps de lattence car l&#39;objet demande au robot une mise a jour de sa positon
+    &#34;&#34;&#34;
+    self._demande_gyroscope()
+    self._lecteur()
+    return self.position_gyro</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="RobotV1.Robot.set_point_reference"><code class="name flex">
+<span>def <span class="ident">set_point_reference</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>La position actuel devient la position de reference pour la position</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_point_reference(self):
+    &#34;&#34;&#34;La position actuel devient la position de reference pour la position&#34;&#34;&#34;
+    self._envoi(&#34;R&#34;)</code></pre>
+</details>
+</dd>
+<dt id="RobotV1.Robot.stop"><code class="name flex">
+<span>def <span class="ident">stop</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Stop le robot instantanément</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stop(self):
+    &#34;&#34;&#34;Stop le robot instantanément&#34;&#34;&#34;
+    self.set_commande_vit(0, 0, 0)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="RobotV1.Robot" href="#RobotV1.Robot">Robot</a></code></h4>
+<ul class="two-column">
+<li><code><a title="RobotV1.Robot.char_declancheur" href="#RobotV1.Robot.char_declancheur">char_declancheur</a></code></li>
+<li><code><a title="RobotV1.Robot.commande_tir" href="#RobotV1.Robot.commande_tir">commande_tir</a></code></li>
+<li><code><a title="RobotV1.Robot.commande_vit" href="#RobotV1.Robot.commande_vit">commande_vit</a></code></li>
+<li><code><a title="RobotV1.Robot.position" href="#RobotV1.Robot.position">position</a></code></li>
+<li><code><a title="RobotV1.Robot.set_point_reference" href="#RobotV1.Robot.set_point_reference">set_point_reference</a></code></li>
+<li><code><a title="RobotV1.Robot.stop" href="#RobotV1.Robot.stop">stop</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

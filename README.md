@@ -6,11 +6,8 @@ Chaque commande est representé par un carractère:
 
 | Character    | action |
 | ---  | --- |
-| a | `front + 1` |
-| b | `front - 1` |
-| A | `front + 10` |
-| B | `front - 10` |
-| c | `lat + 1` |
-| etc | etc |
 | S | `envoie du status` |
 | Z | `tout a zéro` |
+| G | `demande de la position par le gyroscope` |
+| R | `demande de la position par les roues` |
+![Diagramme de sequance de la comunication](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/Saph_201_RobotCup/tree/master/Com/diagramme_sequance.uml&fmt=svg)

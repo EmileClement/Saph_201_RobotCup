@@ -130,7 +130,7 @@ class Robot():
         return self.BT.read_all().decode("ASCII")
     
     def update_status(self, timeout = 1):
-    """
+        """
         Mets à jour la representation local des varriables du robot
 
         Parameters
