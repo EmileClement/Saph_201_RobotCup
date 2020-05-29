@@ -8,6 +8,7 @@ boundary "Instance de classe" as instance
 entity "__position_kadman__" as pos_kad
 entity "__position_roues__" as pos_roue
 entity "__position_gyro__" as pos_gyro
+entity "__convertiseur_position_des_roues__" as conv_roue
 end box
 box "Carte Mbed"
 entity main
@@ -22,12 +23,14 @@ end box
     instance -> pos_kad ++: <<demande de la position>>
     pos_kad -> pos_roue ++: <<demande de la position>>
     pos_roue -> main : "R"
-    main --> pos_roue : position des roues
-    return positions des roues
+    main --> pos_roue : positions des roues
+	pos_roue -> conv_roue ++= positions des roues
+	return position du robot d'apres les roue
+    return position du robot d'apres roues
     
     pos_kad -> pos_gyro ++: <<demande de la position>>
     pos_gyro -> main : "G"
-    main --> pos_gyro : position du gyroscope
+    main --> pos_gyro : position du robot d'apres le gyroscope
     return positions du giroscope
     
     return position calculer par le filtre
