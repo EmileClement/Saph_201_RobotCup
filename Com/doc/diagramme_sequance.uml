@@ -24,7 +24,7 @@ end box
     pos_kad -> pos_roue ++: <<demande de la position>>
     pos_roue -> main : "R"
     main --> pos_roue : positions des roues
-	pos_roue -> conv_roue ++= positions des roues
+	pos_roue -> conv_roue ++: positions des roues
 	return position du robot d'apres les roue
     return position du robot d'apres roues
     
