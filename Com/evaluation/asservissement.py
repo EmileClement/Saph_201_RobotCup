@@ -8,7 +8,7 @@ from vecteur import Vecteur
 
 dt = 0.001
 v_max = 0.5
-acc_max = 10000
+acc_max = 100
 def aller_a(cible, rep, precision, arret = False, divergence = 3):
     pos, vit = rep
     pres_pos, pres_vit = precision
@@ -16,17 +16,25 @@ def aller_a(cible, rep, precision, arret = False, divergence = 3):
         erreur = cible - pos[-1]
         commande = asservissement(erreur, rep)
         pos.append(pos[-1] + vit[-1] * dt)
-        next_acc = vit[-1] + commande * dt
+        next_acc = commande
         if abs(next_acc) >= acc_max:
-            next_acc = next_acc.unitaire() * acc_max
+             next_acc = next_acc.unitaire() * acc_max
         vit.append(vit[-1] + next_acc * dt)
 
 def asservissement(erreur, rep):
     pos, vit = rep
-    return 1 * erreur - 50 * vit[-1]
+    return 1 * erreur - 10 * vit[-1]
 
 #cibles = [Vecteur(rd.randint(0, 200) / 100, rd.randint(0, 200) / 100) for _ in range(15)]
-cibles =[Vecteur(1), Vecteur(1, 1)]
+#cibles =[Vecteur(1), Vecteur(1, 1)]
+
+cibles = []
+with open('trajet_prof.csv', 'r') as file:
+    datas = file.readlines()
+    for line in datas[1:]:
+        line = line.split(',')
+        cibles.append(Vecteur(float(line[1]), float(line[2])))
+
 pos_initial = Vecteur()
 pos = [pos_initial]
 vit = [Vecteur()]

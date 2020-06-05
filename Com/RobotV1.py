@@ -52,8 +52,8 @@ On utilise des unites arbitraire
     R = 0.01
     """Rayon des roues des robot"""
     matrice_ref_local_roue = np.array([[0, 1/R, -l],
-                                      [3**(1/2)/(2*R), -1/(2*R), -l],
-                                      [-3**(1/2)/(2*R), -1/(2*R), -l]])
+                                       [3**(1/2)/(2*R), -1/(2*R), -l],
+                                       [-3**(1/2)/(2*R), -1/(2*R), -l]])
 
     def __init__(self, nom, com):
         """
@@ -81,18 +81,48 @@ On utilise des unites arbitraire
         del self.BT
 
     def __repr__(self):
-        return "{}|{}|C:{},{}".format(
-            self.nom,
-            self.position,
-            self.commande_vit,
-            self.commande_tir
-            )
+        return "{}|{}|C:{},{}".format(self.nom,
+                                      self.position,
+                                      self.commande_vit,
+                                      self.commande_tir)
 
     def __str__(self):
         return self.__repr__()
 
     def _envoi(self, chaine):
         self.BT.write(chaine.encode('ASCII'))
+
+    def _lire(self):
+        return self.BT.read_all().decode("ASCII")
+
+    def _lecteur(self):
+        """Traitement du cahce de la liaison BlueTooth"""
+        chaine_a_traiter = self._lire()
+        for char in chaine_a_traiter:
+            if char in Robot.char_declancheur:
+                self._message_en_attente = char
+            elif char == "\n":
+                self._parsing()
+                self._message_en_attente = ""
+            else:
+                self._message_en_attente += char
+
+    def _parsing(self):
+        chaine = self._message_en_attente
+        declancheur = chaine[0]
+        try:
+            valeur = chaine[1:].split(",")
+            valeur = [float(elem) for elem in valeur]
+            if declancheur == 'G':
+                self._position_gyro = Vecteur(valeur[0],
+                                              valeur[1],
+                                              valeur[2])
+            elif declancheur == 'R':
+                self._position_des_roues = Vecteur(valeur[0],
+                                                   valeur[1],
+                                                   valeur[2])
+        except Exception:
+            print('erreur du parsing depuis le robot {}'.format(self.nom))
 
     @property
     def commande_vit(self):
@@ -150,41 +180,12 @@ On utilise des unites arbitraire
     def _demande_roue(self):
         self.BT.write(b'R')
 
-    def _lire(self):
-        return self.BT.read_all().decode("ASCII")
-
-    def _lecteur(self):
-        """Traitement du cahce de la liaison BlueTooth"""
-        chaine_a_traiter = self._lire()
-        for char in chaine_a_traiter:
-            if char in Robot.char_declancheur:
-                self._message_en_attente = char
-            elif char == "\n":
-                self._parsing()
-                self._message_en_attente = ""
-            else:
-                self._message_en_attente += char
-
-    def _parsing(self):
-        chaine = self._message_en_attente
-        declancheur = chaine[0]
-        try:
-            valeur = chaine[1:].split(",")
-            valeur = [float(elem) for elem in valeur]
-            if declancheur == 'G':
-                self._position_gyro = Vecteur(valeur[0],
-                                              valeur[1],
-                                              valeur[2])
-            elif declancheur == 'R':
-                self._position_des_roues = Vecteur(valeur[0],
-                                                   valeur[1],
-                                                   valeur[2])
-        except Exception:
-            print('erreur du parsing depuis le robot {}'.format(self.nom))
-
     def set_point_reference(self):
         """La position actuel devient la position de reference pour la position"""
         self._envoi("R")
+
+    def _position_kalman(self):
+        assert 0, "not implemented"
 
     @property
     def position(self):
@@ -196,7 +197,7 @@ On utilise des unites arbitraire
         self._demande_roue()
         time.sleep(0.025)
         self._lecteur()
-        return self.position_gyro
+        return self._position_kalman()
 
     @property
     def position_des_roues(self):
@@ -204,6 +205,7 @@ On utilise des unites arbitraire
         self._demande_roue()
         self.lecteur()
         return self._position_des_roues
+
 
 
 
