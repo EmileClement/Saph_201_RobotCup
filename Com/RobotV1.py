@@ -78,6 +78,8 @@ On utilise des unites arbitraire
         self._nombre_tour_roues = [0, 0, 0]
         self.stop()
         self._message_en_attente = ""
+        self._position_initial = Vecteur_position()
+        self._position_initial = self.position
 
     def __del__(self):
         self.stop()
@@ -213,7 +215,9 @@ On utilise des unites arbitraire
         #time.sleep(0.025)
         self._lecteur()
         liste = Robot.matrice_roue_ref_local.dot(np.array(self.position_des_roues))
-        return Vecteur_position(liste[0], liste[1], liste[2])
+        return Vecteur_position(liste[0] - self._position_initial.x,
+                                liste[1] - self._position_initial.y,
+                                liste[2] - self._position_initial.theta)
 
     @property
     def position_des_roues(self):
@@ -226,4 +230,4 @@ try:
     del R
 except Exception:
     pass
-R = Robot("A", "COM5")
+R = Robot("A", "COM4")
