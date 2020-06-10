@@ -54,6 +54,7 @@ On utilise des unites arbitraire
     matrice_ref_local_roue = np.array([[0, 1/R, -l],
                                        [3**(1/2)/(2*R), -1/(2*R), -l],
                                        [-3**(1/2)/(2*R), -1/(2*R), -l]])
+    matrice_roue_ref_local = np.linalg.inv(matrice_ref_local_roue)
 
     def __init__(self, nom, com):
         """
@@ -72,11 +73,13 @@ On utilise des unites arbitraire
         self.commande_vit = Vecteur()
         self.commande_tir = (0, 0)
         self._position_gyro = Vecteur()
-        self._position_roue = Vecteur()
+        self._position_roues = [0, 0, 0]
+        self._nombre_tour_roues = [0, 0, 0]
         self.stop()
         self._message_en_attente = ""
 
     def __del__(self):
+        self.stop()
         self.BT.close()
         del self.BT
 
@@ -110,19 +113,27 @@ On utilise des unites arbitraire
     def _parsing(self):
         chaine = self._message_en_attente
         declancheur = chaine[0]
-        try:
-            valeur = chaine[1:].split(",")
-            valeur = [float(elem) for elem in valeur]
-            if declancheur == 'G':
-                self._position_gyro = Vecteur(valeur[0],
-                                              valeur[1],
-                                              valeur[2])
-            elif declancheur == 'R':
-                self._position_des_roues = Vecteur(valeur[0],
-                                                   valeur[1],
-                                                   valeur[2])
-        except Exception:
-            print('erreur du parsing depuis le robot {}'.format(self.nom))
+        #try:
+        valeur = chaine[1:].split(",")
+        valeur = [float(elem) for elem in valeur]
+        if declancheur == 'G':
+            self._position_gyro = Vecteur(valeur[0],
+                                          valeur[1],
+                                          valeur[2])
+        elif declancheur == 'R':
+            self._position_des_roues = [valeur[0],
+                                        valeur[2],
+                                        valeur[4]]
+            self._delta_position_roues = [valeur[1],
+                                               valeur[3],
+                                               valeur[5]]
+            for idx in range(3):
+                if self._position_des_roues[idx] - self._delta_position_roues[idx] < 0:
+                    self._nombre_tour_roues[idx] += 1
+                elif self._position_des_roues[idx] - self._delta_position_roues[idx] > 360:
+                    self._nombre_tour_roues[idx] += -1
+        # except Exception:
+        #     print('erreur du parsing depuis le robot {}'.format(self.nom))
 
     @property
     def commande_vit(self):
@@ -144,7 +155,7 @@ On utilise des unites arbitraire
         rotation : float
             DESCRIPTION.
         """
-        frontal, lateral, rotation = commande
+        frontal, lateral, rotation = commande.x, commande.y, commande.theta
         self._commande_vit = Vecteur(frontal, lateral, rotation)
         self._update_commande()
 
@@ -169,7 +180,7 @@ On utilise des unites arbitraire
 
     def stop(self):
         """Stop le robot instantanément"""
-        self.commande_vit = (0, 0, 0)
+        self.commande_vit = Vecteur()
 
     def _demande_status(self):
         self.BT.write(b'S')
@@ -193,25 +204,26 @@ On utilise des unites arbitraire
 
         Il y a un temps de lattence car l'objet demande au robot une mise a jour de sa positon
         """
-        self._demande_gyroscope()
-        self._demande_roue()
-        time.sleep(0.025)
+        self._update_commande()
+        #self._demande_gyroscope()
+        #self._demande_roue()
+        #time.sleep(0.025)
         self._lecteur()
-        return self._position_kalman()
+        return Robot.matrice_roue_ref_local.dot(np.array(self.position_des_roues))
 
     @property
     def position_des_roues(self):
         """Position des trois roues du robot"""
-        self._demande_roue()
-        self.lecteur()
-        return self._position_des_roues
+        #self._demande_roue()
+        self._lecteur()
+        return [self.position_des_roues[idx] + 360*self._nombre_tour_roues for idx in range(3)]
 
 
 
 
 
-# try:
-#     del R
-# except :
-#     pass
-# R = Robot("A", "COM7")
+try:
+    del R
+except Exception:
+    pass
+R = Robot("A", "COM5")

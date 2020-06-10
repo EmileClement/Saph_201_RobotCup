@@ -4,7 +4,7 @@ Created on Fri May 15 10:03:10 2020
 
 @author: Leopold
 """
-from vecteur import Vecteur
+from vecteur import Vecteur, Vecteur_position
 
 dt = 0.001
 v_max = 0.5
