@@ -11,6 +11,7 @@ import serial
 import evaluation.vecteur
 
 Vecteur = evaluation.vecteur.Vecteur
+Vecteur_position = evaluation.vecteur.Vecteur_position
 
 class Robot():
     """
@@ -125,12 +126,14 @@ On utilise des unites arbitraire
                                         valeur[2],
                                         valeur[4]]
             self._delta_position_roues = [valeur[1],
-                                               valeur[3],
-                                               valeur[5]]
+                                          valeur[3],
+                                          valeur[5]]
             for idx in range(3):
-                if self._position_des_roues[idx] - self._delta_position_roues[idx] < 0:
+                if (self._position_des_roues[idx]
+                        - self._delta_position_roues[idx] < 0):
                     self._nombre_tour_roues[idx] += 1
-                elif self._position_des_roues[idx] - self._delta_position_roues[idx] > 360:
+                elif (self._position_des_roues[idx]
+                      - self._delta_position_roues[idx] >= 4096):
                     self._nombre_tour_roues[idx] += -1
         # except Exception:
         #     print('erreur du parsing depuis le robot {}'.format(self.nom))
@@ -209,18 +212,15 @@ On utilise des unites arbitraire
         #self._demande_roue()
         #time.sleep(0.025)
         self._lecteur()
-        return Robot.matrice_roue_ref_local.dot(np.array(self.position_des_roues))
+        liste = Robot.matrice_roue_ref_local.dot(np.array(self.position_des_roues))
+        return Vecteur_position(liste[0], liste[1], liste[2])
 
     @property
     def position_des_roues(self):
         """Position des trois roues du robot"""
         #self._demande_roue()
         self._lecteur()
-        return [self.position_des_roues[idx] + 360*self._nombre_tour_roues for idx in range(3)]
-
-
-
-
+        return [self._position_des_roues[idx]*180/2048 + 360*self._nombre_tour_roues[idx] for idx in range(3)]
 
 try:
     del R
